@@ -50,10 +50,84 @@ package _07_The_Wrong_Way_Cow;
 
 public class TheWrongWayCow {
 
+	static int returnArray[][];
+	static int up;
+	static int down;
+	static int left;
+	static int right;
+	
     public static int[] findWrongWayCow(final char[][] field) {
         // Fill in the code to return the [col, row] coordinate position of the
         // head (letter 'c') of the wrong way cow!
-        
-        return null;
-    }
+    	left = 0;
+		right = 0;
+		up = 0;
+		down = 0;
+		returnArray = new int[4][2];
+		for (int i = 0; i < field.length; i++) {
+			for (int j = 0; j < field[i].length; j++) {
+				char currentChar = field[i][j];
+				if (j - 2 >= 0) {
+					if (currentChar == 'c' && field[i][j - 1] == 'o' && field[i][j - 2] == 'w')
+						addLeft(i, j);
+					if (currentChar == 'w' && field[i][j - 1] == 'o' && field[i][j - 2] == 'c')
+						addRight(i, j - 2);
+				}
+				if (i - 2 >= 0) {
+					if (currentChar == 'c' && field[i - 1][j] == 'o' && field[i - 2][j] == 'w')
+						addUp(i, j);
+					if (currentChar == 'w' && field[i - 1][j] == 'o' && field[i - 2][j] == 'c')
+						addDown(i, j);
+				}
+			}
+		}
+
+		for(int i = 0; i < returnArray.length; i++) {
+			for(int j = 0; j < returnArray[i].length; j++) { 
+				System.out.print(returnArray[i][j] + " ");
+			}
+			System.out.println();
+		}
+		if (up == 1) {
+			System.out.println("UP: " + up);
+			return returnArray[0];
+		} else if (down == 1) {
+			System.out.println("DOWN: " +down);
+			return returnArray[1];
+		} else if (left == 1) {
+			System.out.println("LEFT: "+left);
+			return returnArray[2];
+		}
+		else if (right == 1) {
+			System.out.println("RIGHT: "+right);
+			return returnArray[3];
+		} else {
+			System.out.println("Reached null");
+			return null;
+		}
+	}
+
+	static void addLeft(int i, int j) {
+		left++;
+		returnArray[2][0] = j;
+		returnArray[2][1] = i;
+	}
+
+	static void addRight(int i, int j) {
+		right++;
+		returnArray[3][0] = j;
+		returnArray[3][1] = i;
+	}
+
+	static void addUp(int i, int j) {
+		up++;
+		returnArray[0][0] = j;
+		returnArray[0][1] = i;
+	}
+
+	static void addDown(int i, int j) {
+		down++;
+		returnArray[1][0] = j;
+		returnArray[1][1] = i-2;
+	}
 }
